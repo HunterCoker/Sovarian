@@ -4,20 +4,23 @@
 
 game* game::_S_instance = nullptr;
 
-struct game_state {
+struct game_state
+{
     bool isRunning;
 };
 
-static game_state _S_gameState {
+static game_state _S_gameState
+{
     .isRunning = true,
 };
 
-game::game() {
+game::game()
+{
 
 }
 
-game::~game() {
-    _S_gameState.isRunning = false;
+game::~game()
+{
     assert(_S_instance != nullptr);
     delete _S_instance;
 }
@@ -28,10 +31,12 @@ game& game::get() {
     return *_S_instance;
 }
 
-void game::update(double dt) {
+void game::update(double dt)
+{
 
 }
 
-bool game::isRunning() const {
+bool game::isRunning() const
+{
     return _S_gameState.isRunning;
 }

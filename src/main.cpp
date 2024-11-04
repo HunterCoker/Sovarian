@@ -1,24 +1,20 @@
 #include "game/game.h"
+#include "game/timing/limiter.h"
 
-#include "game/timing/timer.h"
-
-#include <thread>
 #include <iostream>
 
-int main(int argc, const char* argv[]) {
-    timer::start(60);
+using namespace timing::literals;
 
-    // auto& sovarian = game::get();
+int main( /* int argc, const char* argv[] */ ) {
+    timing::limiter::setTargetFps(60_fps);
+    game& sovarian = game::get();
 
-    while (true) {
-        timer::tick();
+    while (sovarian.isRunning())
+    {
+        double dt = timing::limiter::dt();
+        sovarian.update(dt);
 
-        if (timer::lastFrameDuration < timer::targetFrameDuration) {
-            std::this_thread::sleep_for(
-                timer::targetFrameDuration - timer::lastFrameDuration);
-        } else {
-            std::cout << timer::lastFrameDuration.count() << std::endl;
-        }
+        timing::limiter::wait();
     }
 
     return 0;

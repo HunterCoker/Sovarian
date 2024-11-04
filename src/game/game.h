@@ -7,10 +7,9 @@ public:
     ~game();
 
     static game& get();
+    bool isRunning() const;
 
     void update(double dt);
-
-    bool isRunning() const;
 private:
     game();
     static game* _S_instance;
